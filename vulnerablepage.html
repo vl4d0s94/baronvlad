@@ -1,69 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SuperWebMailer Remote Code Execution (CVE-2020-11546) - Fake Demo</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-    h1 {
-      color: #e74c3c;
-    }
-    .response {
-      background-color: #f4f4f4;
-      padding: 10px;
-      margin-top: 20px;
-    }
-    .alert {
-      color: #ff0000;
-      background-color: #fff3cd;
-      padding: 10px;
-      border: 1px solid #ffeeba;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Static XSS Test</title>
 </head>
 <body>
+    <h1>Search Results</h1>
+    <p>Search: <span id="searchQuery"></span></p>
 
-  <h1>SuperWebMailer Remote Code Execution Simulation (CVE-2020-11546)</h1>
-  <p>This is a demonstration of a fake RCE vulnerability simulation. The request will not actually execute any system commands, but it shows how an attacker could exploit the vulnerability in <strong>SuperWebMailer</strong>.</p>
-
-  <form id="exploitForm">
-    <label for="language">Language:</label>
-    <input type="text" id="language" name="Language" value="de{${system('ls')}}"><br><br>
-    <input type="submit" value="Submit">
-  </form>
-
-  <div class="response" id="response">
-    <h3>Simulated Response</h3>
-    <p>If the vulnerability was present, the following result would be shown on the page:</p>
-    <pre>ajax_ccea.php
-ajax_getemailingactions.php
-ajax_getemailtemplates.php</pre>
-  </div>
-
-  <div class="alert">
-    <strong>Warning:</strong> This is a simulated attack. No actual code is executed on the server.
-  </div>
-
-  <script>
-    // JavaScript to handle form submission and simulate vulnerability
-    document.getElementById("exploitForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-      
-      var language = document.getElementById("language").value;
-      if (language.includes("${system('ls')}")) {
-        document.getElementById("response").innerHTML = `
-          <h3>Simulated Response</h3>
-          <pre>ajax_ccea.php
-ajax_getemailingactions.php
-ajax_getemailtemplates.php</pre>
-        `;
-      }
-    });
-  </script>
-
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchQuery = urlParams.get('search');
+        document.getElementById('searchQuery').textContent = searchQuery;
+    </script>
 </body>
 </html>
