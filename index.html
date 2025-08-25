@@ -18,8 +18,16 @@
   <div class="container">
     <h1>Test page</h1>
   </div>
+
+      <h1>Enter your name:</h1>
+    <form action="xss.html" method="get">
+      <input type="text" name="name">
+      <input type="submit" value="Submit">
+    </form>
+      <p>Hello, <script>document.write(new URLSearchParams(window.location.search).get("name"));</script>!</p>
 </body>
 </html>
+
 
 
 
