@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM XSS Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    #result {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f4f4f4;
+    }
+  </style>
+</head>
+<body>
+  <h1>DOM XSS Test Page</h1>
+  <p>This page reflects your input directly into the page (no sanitization), allowing potential XSS vulnerabilities.</p>
+  
+  <div id="result"></div>
+
+  <script>
+    // This is where the vulnerability lies. The user input is reflected directly into the DOM.
+    var urlParams = new URLSearchParams(window.location.search);
+    var userInput = urlParams.get('input');  // Capture user input from the URL query string
+    if (userInput) {
+      document.getElementById('result').innerHTML = userInput;  // Unsafely insert user input into the DOM
+    }
+  </script>
+
+</body>
+</html>
